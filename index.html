@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+  
+  <head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="static/css/main.css">
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.3/handlebars.min.js"
+    integrity="sha256-/PJBs6QWvXijOFIX04kZpLb6ZtSQckdOIavLWKKOgXU="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <script src="static/js/typeahead.bundle.js"></script>
+  <link rel="stylesheet" href="static/css/typeahead.css">
+  <link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="static/css/lazy_load.css">
+  <script src="static/js/lazy_load.js"></script>
+  <title> ICLR 2020 </title>
+</head>
+  <body>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+    <link rel="stylesheet" href="static/css/ilike.css">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <!-- NAV -->
+    
+
+    
+      
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css?family=Lato:400,900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Exo" rel='stylesheet'>
+<link href="https://fonts.googleapis.com/css?family=Cuprum" rel='stylesheet'>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"
+  integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ="
+  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.28/moment-timezone-with-data.min.js"
+  integrity="sha256-IWYg4uIC8/erItNXYvLtyYHioRi2zT1TFva8qaAU/ww="
+  crossorigin="anonymous"></script>
+<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light mr-auto " id="main-nav" >
+  <div class="container">
+    <a class="navbar-brand" href="index.html">
+    <img class="logo" style='visibility: ' src="static/images/IlikeCLR-logo.png"  width="200px" />
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse text-right flex-grow-1" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item ">
+          <a class="nav-link" target="_blank" href="https://iclr.cc/virtual/">
+            <nobr>Go to official ICLR website <svg class="bi bi-box-arrow-up-right" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" d="M1.5 13A1.5 1.5 0 003 14.5h8a1.5 1.5 0 001.5-1.5V9a.5.5 0 00-1 0v4a.5.5 0 01-.5.5H3a.5.5 0 01-.5-.5V5a.5.5 0 01.5-.5h4a.5.5 0 000-1H3A1.5 1.5 0 001.5 5v8zm7-11a.5.5 0 01.5-.5h5a.5.5 0 01.5.5v5a.5.5 0 01-1 0V2.5H9a.5.5 0 01-.5-.5z" clip-rule="evenodd"/>
+    <path fill-rule="evenodd" d="M14.354 1.646a.5.5 0 010 .708l-8 8a.5.5 0 01-.708-.708l8-8a.5.5 0 01.708 0z" clip-rule="evenodd"/>
+</svg></nobr>
+          </a>
+        </li>  
+      </ul>
+    </div>
+  </div>
+</nav>
+    
+    <div class="container">
+
+          <div id="loading" class="overlay">
+              <div id="loading-indicator">
+              <div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+              </div>
+          </div>
+      <!-- Header -->
+      
+      <div class="row"></div>
+      <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+        <div class="tab-pane active" id="tab-browse" role="tabpanel"
+          aria-labelledby="nav-profile-tab">
+          <div class="row d-none session_notice">
+            <div class="alert alert-warning alert-dismissible fade show col-12"
+              role="alert">
+              Showing papers for <span id="session_name"
+                style="font-weight: bold;"></span>.
+              <!-- To navigate all papers close this message. -->
+              <button type="button" class="close remove_session"
+                data-dismiss="alert"
+                aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control typeahead_all"
+                  placeholder="Search">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary typeahead_all_clear"
+                    type="button">&times;
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col-12 col-sm-6 col-md-6 col-lg-4 text-center"
+              style="margin-bottom: 10px;">
+              <div class="btn-group btn-group-toggle filter_option">
+                <label class="btn btn-outline-secondary"
+                  data-tippy-content="Search for papers titles">
+                <input type="radio" name="options"
+                  value="titles"
+                  autocomplete="off" checked> title
+                </label>
+                <label class="btn btn-outline-secondary"
+                  data-tippy-content="Search for papers with specific keywords">
+                <input type="radio" name="options"
+                  value="keywords"
+                  autocomplete="off" > keyword
+                </label>
+                <label class="btn btn-outline-secondary active"
+                  data-tippy-content="Search for papers from specific authors">
+                <input type="radio" name="options"
+                  value="authors"
+                  autocomplete="off" > author
+                </label>
+              </div>
+            </div> -->
+            <!-- <div class="col-12 col-lg-4">
+              <button class="btn btn-outline-secondary reshuffle"> shuffle
+              </button>
+              <div class="float-right">
+                <div class="btn-group btn-group-toggle render_option"
+                  data-toggle="buttons">
+                  <label class="btn btn-outline-secondary active">
+                  <input type="radio" name="options" value="list"
+                    autocomplete="off"> list
+                  </label>
+                  <label class="btn btn-outline-secondary active">
+                  <input type="radio" name="options"
+                    value="compact"
+                    autocomplete="off"> compact
+                  </label>
+                  <label class="btn btn-outline-secondary">
+                  <input type="radio" name="options"
+                    value="detail"
+                    autocomplete="off" checked> detail
+                  </label>
+                </div>
+              </div>
+            </div> -->
+            <div class="col-12 col-lg-4">
+              <label class="btn text-muted">Order by</label>
+              <div class="float-right">
+                <div class="btn-group btn-group-toggle order_by"
+                  data-toggle="buttons">
+                  <label class="btn btn-outline-secondary">
+                  <input type="radio" name="options" value="random"
+                    autocomplete="off"> random
+                  </label>
+                  <label class="btn btn-outline-secondary">
+                  <input type="radio" name="options"
+                    value="search"
+                    autocomplete="off"> search
+                  </label>
+                  <label class="btn btn-outline-secondary">
+                  <input type="radio" name="options"
+                    value="likelihood"
+                    autocomplete="off"> <i class="fa fa-thumbs-up likon"></i>-lihood
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="cards row grid">
+          </div>
+        </div>
+        <div class="tab-pane fade" id="tab-vis" role="tabpanel"
+          aria-labelledby="nav-profile-tab">
+          <div class="row">
+            <div class="col-12 col-sm-6 col-lg-4">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control typeahead_all"
+                  placeholder="Search">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary typeahead_all_clear"
+                    type="button">&times;
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-4"
+              style="margin-bottom: 10px;">
+              
+                <div class="btn-group btn-group-toggle filter_option">
+                  <label class="btn btn-outline-secondary active"
+                    data-tippy-content="Search for papers from specific authors">
+                  <input type="radio" name="options"
+                    value="authors"
+                    autocomplete="off" checked> author
+                  </label>
+                  <label class="btn btn-outline-secondary"
+                    data-tippy-content="Search for papers with specific keywords">
+                  <input type="radio" name="options"
+                    value="keywords"
+                    autocomplete="off"> keyword
+                  </label>
+                  <label class="btn btn-outline-secondary"
+                    data-tippy-content="Search for papers titles">
+                  <input type="radio" name="options"
+                    value="titles"
+                    autocomplete="off"> title
+                  </label>
+                  <label class="btn btn-outline-secondary"
+                    data-tippy-content="Search for papers closest related to authors or other papers">
+                  <input type="radio" name="options" value="recs"
+                    autocomplete="off"> similar
+                  </label>
+                  
+              </div>
+            </div>
+            
+              
+              
+              
+              
+              
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+              
+            
+          
+            
+            
+            
+        </div>
+        <div class="row " style="margin-top: 10px; text-align: center;">
+          <div class="card" style="margin-right: -40px">
+            <div class="card-header">
+              <div id='outer_svg'
+                style="display: inline-block; vertical-align: top;">
+                <svg class="plot"
+                  style="display: block; "></svg>
+              </div>
+              <div class="results"
+                style="display: inline-block; width:200px;vertical-align: top; text-align: left;">
+                <div style="display: block; overflow-y: auto;"
+                  id="table_info">
+                  <div id="explain_text_plot">
+                    <p>If you <b>hover</b> over a dot, you see
+                      the
+                      related
+                      paper.
+                    </p>
+                    <p>If you <b>click</b> on a dot, you go to
+                      the
+                      related paper page.
+                    </p>
+                    <p>You can <b>search</b> for papers by
+                      author,
+                      keyword, or title 
+                    </p>
+                    <p><b>Drag a rectangle </b> to summarize an
+                      area
+                      of the plot.
+                    </p>
+                  </div>
+                  <div id="summary_selection" style="">
+                  </div>
+                  <div style="overflow-y: auto; bottom: 0;margin-top:5pt;">
+                    <div id="sel_papers">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <script src="static/js/typeahead_tools.js"></script>
+    <script src="static/js/paper_like.js"></script>
+    <script>
+      const SITE_ROOT = "https://iclr.cc/virtual/";
+      const LIKE_API = null; // disabled
+      $(document).ready(function () {
+          tippy('[data-tippy-content]', {trigger: 'mouseenter focus'});
+          start();
+      })
+      
+    </script>
+    <script type="text/javascript">
+  $(document).ready(function () {
+  
+  if (location.hash !== '') {
+  $('a[href="' + location.hash + '"]').tab('show');
+  }
+  
+  $("a[data-toggle='tab']").on("shown.bs.tab", function (e) {
+  var hash = $(e.target).attr("href");
+  if (hash.substr(0,1) == "#") {
+  var position = $(window).scrollTop();
+  location.replace("#" + hash.substr(1));
+  $(window).scrollTop(position);
+  }
+  });
+  
+  });
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-163955028-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  
+  gtag('config', 'UA-163955028-1');
+</script>
+<footer class="footer bg-light p-4">
+  <div class="container">
+    <p class="float-right"><a href="#">Back to Top</a></p>
+    <p class="text-center">© 2020 International Conference on Learning Representations</p>
+  </div>
+</footer>
+  </body>
+</html>
