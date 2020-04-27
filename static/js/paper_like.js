@@ -20,20 +20,13 @@ let $grid = null;
 let allProj = [];
 
 // From https://stackoverflow.com/questions/7128675/from-green-to-red-color-depend-on-percentage
-
-//var percentColors = [
-//    { pct: 0.0, color: { r: 0xff, g: 0x00, b: 0 } },
-//    { pct: 0.5, color: { r: 0xff, g: 0xff, b: 0 } },
-//    { pct: 1.0, color: { r: 0x00, g: 0xff, b: 0 } }
-//];
-
-var percentColors = [
-    { pct: 0.0, color: { r: 205, g: 92, b: 92 } }, // { pct: 0.0, color: { r: 236, g: 0, b: 0 } },
+const percentColors = [
+    { pct: 0.0, color: { r: 205, g: 92, b: 92 } },
     { pct: 0.5, color: { r: 243, g: 187, b: 0 } },
     { pct: 1.0, color: { r: 0, g: 176, b: 13 } }
 ];
 
-var getColorForPercentage = function(pct) {
+const getColorForPercentage = function(pct) {
     for (var i = 1; i < percentColors.length - 1; i++) {
         if (pct < percentColors[i].pct) {
             break;
@@ -51,12 +44,11 @@ var getColorForPercentage = function(pct) {
         b: Math.floor(lower.color.b * pctLower + upper.color.b * pctUpper)
     };
     return 'rgb(' + [color.r, color.g, color.b].join(',') + ')';
-    // or output as hex if preferred
 }
 
-var scoreToPercentage = function(score){
+const scoreToPercentage = function(score){
     var scale = 0.9;
-    return Math.max(Math.min((score * scale - 1) * -0.5, 1), 0);
+    return Math.max(Math.min((score * scale + 1) * 0.5, 1), 0);
 }
 
 const updateCards = (papers) => {
@@ -193,78 +185,58 @@ const doSearch = it => {
     }
 };
 
-function computeLikelihoodResponse(response)
-{  
-   //$('.progress-container').css('background', "linear-gradient(to right, " + response.quantiles.map(scoreToPercentage).map(getColorForPercentage).join(",") + ")");
-   if (response) {
-    likelihood_outdated = false; // We have updated
-    $.each( response.predictions, function( key, val ) {
-      // Lower is better, get 95% conf to sort on
-      $item = jQuery('#card-' + val.id).parent();
-      // $item.attr('data-like', val.score);
-      $item.attr('data-max-score', val.pred - 2 * val.sig);
-      $item.attr('data-score', val.pred);
-      $item.attr('data-score-prev', val.prev_pred);
-      $item.attr('data-sig', val.sig);
-      $item.attr('data-ei', val.acq);
-      // $item.attr('data-size', val.size);
-      $item.find('.score').text(Math.round(val.pred*-100));
-      /*$item.find('.min-score').text(Math.round(((val.pred + 2 * val.sig) - 1) * -50));
-      $item.find('.max-score').text(Math.round(((val.pred - 2 * val.sig) - 1) * -50));*/
-      $item.find('.avg-score').text(Math.round(((val.pred) - 1) * -50));
-      $item.find('.std-score').text(Math.round((2 * val.sig) * 50));
+const setScore = (card, score) => {
+  card.attr('data-score', score);
 
-      $matchperc = $item.find('.matchperc');
-      var perc = scoreToPercentage(val.pred);
-      if (val.score < 0) perc = 1;
-      if (val.score > 0) perc = 0;
-      $matchperc.width(Math.round(perc * 100) + "%");
-      var color = getColorForPercentage(perc);
-      $matchperc.css("background-color", color);
-
-      //$item.toggleClass('grid-item--size2', val.islarge)
-    });
-  } else {
-    jQuery('.myCard').each( (i, el) => { 
-      jQuery(el).attr('data-score', 0)
-    })
-  }
-  jQuery('#loading').hide();
-  // jQuery('#main-grid').removeClass('grid-non-updating');
-  if (order_by == 'likelihood'){
-    // Update in realtime, otherwise don't since random will reshuffle as well
-    $grid.isotope('updateSortData').isotope();
-  }
+  const likes = parseInt(card.attr('data-likes'))
+  const perc = likes > 0 ? 1. : (likes < 0 ? -1. : scoreToPercentage(score));
+  
+  $matchperc = card.find('.matchperc');
+  $matchperc.width(Math.round(perc * 100) + "%");
+  var color = getColorForPercentage(perc);
+  $matchperc.css("background-color", color);
 }
 
 function computeLikelihood(){
-    // API does minimization, so flip the likes to obtain the score (lower = better)
-    let feedback = jQuery('.myCard[data-likes!=0]').map((i, el) => {
-       return { 'item_id': jQuery(el).attr('data-id'), 'value': -parseInt(jQuery(el).attr('data-likes'))} 
-     }).toArray();
-    // jQuery('#loading').show();
-    let data = {
-      'embeddings': allProj,
-      'feedback': feedback
-    }
+
     jQuery('#loading').show();
-    if (LIKE_API) {
-      jQuery.ajax({
-        url: LIKE_API,
-        type: "POST",
-        data: JSON.stringify(data),
-        contentType:"application/json; charset=utf-8",
-        dataType: "json",
-        crossDomain: true,
-        success: computeLikelihoodResponse,
-        error: function (xhr, ajaxOptions, thrownError) {
-          computeLikelihoodResponse(null)
-        }
-      });  
+
+
+    // Use kriging.js, see https://oeo4b.github.io/
+    var t = [ /* Target variable */ ];
+    var x = [ /* X-axis coordinates */ ];
+    var y = [ /* Y-axis coordinates */ ];
+    jQuery('.myCard[data-likes!=0]').each((i, el) => {
+      el = jQuery(el);
+      t.push(parseInt(jQuery(el).attr('data-likes')));
+      let emb = proj_dict[jQuery(el).attr('data-id')];
+      x.push(emb[0]);
+      y.push(emb[1]);
+    })
+    if (t.length > 1){
+      // var model = "exponential";
+      var model = "gaussian";
+      var sigma2 = 0.3, alpha = 1;
+      var variogram = kriging.train(t, x, y, model, sigma2, alpha);
+      console.log("trained model")
+
+      jQuery('.myCard').each( (i, el) => { 
+        el = jQuery(el)
+        let emb = proj_dict[jQuery(el).attr('data-id')];
+        let score = kriging.predict(emb[0], emb[1], variogram)
+        setScore(el, score)
+      })
     } else {
-      computeLikelihoodResponse(null)
+      jQuery('.myCard').each( (i, el) => { 
+        setScore(jQuery(el), 0)
+      })
     }
-    
+    jQuery('#loading').hide();
+    // jQuery('#main-grid').removeClass('grid-non-updating');
+    if (order_by == 'likelihood'){
+      // Update in realtime, otherwise don't since random will reshuffle as well
+      $grid.isotope('updateSortData').isotope();
+    }
 }
 
 
@@ -282,6 +254,8 @@ const start = () => {
 
         allPapers = papers;
         allProj = proj;
+        proj_dict = {};
+        jQuery.each(allProj, (i, el) => { proj_dict[el['id']] = el['pos']});
         calcAllKeys(allPapers, allKeys);
         const allKeysCombined = allKeys['authors'].concat(allKeys['keywords'], allKeys['titles'])
         initTypeAhead(allKeysCombined, '.typeahead_all', 'ilike', (el, it) => { doSearch(it) });
@@ -314,11 +288,9 @@ const start = () => {
           getSortData: {
             searchMatch: '[data-search-match] parseFloat',
             id: '[data-id]',
-            //searchMatch: '.pp-card[data-search-match] parseFloat',
-            //id: '.pp-card[data-id]',
             score: '[data-score] parseFloat',
-            maxScore: '[data-max-score] parseFloat',
-            ei: '[data-ei] parseFloat',
+            //maxScore: '[data-max-score] parseFloat',
+            // ei: '[data-ei] parseFloat',
             like: '[data-likes] parseInt',
           }
         });
@@ -372,7 +344,7 @@ jQuery('.btn-group.order_by').on( 'click', 'input', function() {
     }
     $grid.isotope({ sortBy: ['like', 'score', 'random'], sortAscending: {
         'like': false,
-        'score': true,
+        'score': false,
         'random': true
       } });
   }
@@ -422,6 +394,9 @@ const card_html = openreview => `
                     <div class="like">
                         <i class="fas fa-thumbs-up fa-stack-1x"></i>
                     </div>
+                  </div>
+                  <div class="match">
+                      <div class="matchperc"></div>
                   </div>
                 </div>
                 
